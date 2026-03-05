@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import "../globals.css";
+import ClientLayout from "../components/ClientLayout";
+import Menu from "../components/Menu/Menu";
+import RightBoard from "../components/RightBoard/RightBoard";
+import { UserProvider } from "./UserContext"; // <-- import do Context pasra  puxar os dadosdo usuario
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-montserrat', 
+  display: 'swap',
+});
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "PostVision",
+  description: "Analíse postural em exercícios físicos utilizando visão computacional.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <UserProvider>
+      <div className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable}`}>
+        <ClientLayout>
+          <Menu />
+          {children}
+        </ClientLayout>
+      </div>
+    </UserProvider>
+  );
+}
